@@ -38,7 +38,7 @@ install -m 0755 contrib/rpm/passivbot-wrapped.sh %{buildroot}%{_bindir}/%{name}
 %doc README.md
 %license LICENSE
 %{_datarootdir}/%{name}/
-%{_bindir}/%{name}
+%attr(755, root, root) %{_bindir}/%{name}
 
 %changelog
 {{{ git_changelog }}}
