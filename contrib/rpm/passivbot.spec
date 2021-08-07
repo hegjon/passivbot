@@ -27,9 +27,6 @@ python3.8 -m venv bundled-env
 source bundled-env/bin/activate
 pip3.8 install -r requirements.txt
 
-pip3.8 install pyinstaller
-pyinstaller start_bot.py
-
 %install
 install -m 0755 -vd %{buildroot}%{_datarootdir}/%{name}
 cp -a . %{buildroot}%{_datarootdir}/%{name}
