@@ -1,4 +1,7 @@
 %global debug_package %{nil}
+%global __provides_exclude_from .*
+%global __requires_exclude_from .*
+AutoReqProv: no
 
 Name:    {{{ git_name name="passivbot" }}}
 Version: 4.0.0
