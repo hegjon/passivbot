@@ -1,6 +1,6 @@
 # Welcome to Passivbot!
 
-![Passivbot](images/logo.png)
+![Passivbot](images/logo_pbot_dark.png)
 
 <a class="github-button" href="https://github.com/enarjord/passivbot" data-icon="octicon-star" data-size="large" aria-label="Star enarjord/passivbot on GitHub">Star</a>
 <a class="github-button" href="https://github.com/enarjord/passivbot/fork" data-icon="octicon-repo-forked" data-size="large" aria-label="Fork enarjord/passivbot on GitHub">Fork</a>
@@ -24,7 +24,7 @@ It provides support for automatically optimize configurations, backtest using hi
 
 ## Supported exchanges
 
-Currently the exchanges **Binance Futures**, **Binance Spot** and **Bybit Futures** are implemented and supported.  
+Currently the exchanges **Binance Futures**, **Binance Spot**, **Binance US**, and **Bybit Futures** are implemented and supported.  
 The bot does not use [ccxt](https://github.com/ccxt/ccxt), so other exchanges cannot be used.
 
 Not all functionality is supported on both exchanges, depending on the APIs that exchanges expose and development efforts.

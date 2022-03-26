@@ -6,7 +6,7 @@ how you can start your bot, and anything relating to keeping the system running 
 ## Usage
 
 In order to start the bot in live mode, you will need two things:
-1) setup your API-keys and (optionally) your telegram settings in the `api-keys.json` file in the root folder.
+1) setup your API-keys in the `api-keys.json` file in the root folder.
    The template file `api-keys.example.json` can be copied as a starting file. 
 2) have the config file you want to use in live mode readily available for the bot (typically placed in `configs/live`)
 
@@ -26,13 +26,13 @@ step (e.g. `binance_01` in the template for example).
 To actually start the bot, you can use the following command:
 
 ```shell
-python3 start_bot.py {account_name} {symbol} {path/to/config.json}
+python3 passivbot.py {account_name} {symbol} {path/to/config.json}
 ```
 
 An actual command with the values filled in could look like this for example:
 
 ```shell
-python3 start_bot.py binance_01 XMRUSDT configs/live/binance_xmrusdt.json
+python3 passivbot.py binance_01 XMRUSDT configs/live/binance_xmrusdt.json
 ```
 
 ### Default configurations
@@ -48,31 +48,37 @@ If you found a good config and want to share this configuration, please feel fre
 
 ## Controlling the bot
 
-While the bot is running, you can use Telegram to control the bot. This includes getting information on the results,
-open trades as well as pausing the bot, and much more. You can read more on how to set up [Telegram here](telegram.md).
+It is possible to control the bot using the following CLI options:
 
+- `-lm LONG_MODE` (or `-sm SHORT_MODE` for shorts): specify one of the following modes: [n (normal), m (manual), gs (graceful_stop), p (panic), t (tp_only)]
+    - `n` (normal); normal operation
+    - `m` (manual): bot neither creates nor cancels orders.
+    - `gs` (graceful stop): let the bot continue as normal until all positions are fully closed, then not open any more positions.
+    - `p` (panic): bot will close positions asap using limit orders
+    - `t` (TP-only): bot only manages TP grid and will not cancel or create any entries.
+- `-lw 0.12` (or `-sw 0.12` for shorts): specify long wallet exposure limit, overriding value from live config
+- `-lw -0` (or `sw -0` for shorts): disable and remove all reentries. Bot still manages TP.
+
+You can use the command for shorts and long in the same line.
+Example to set pbr = 0.1 for longs, 0.05 for shorts, normal mode for longs and manual mode for shorts: 
+```shell
+python3 passivbot.py binance_01 XMRUSDT configs/live/binance_xmrusdt.json -lw 0.1 -sw 0.05 -lm n -sm m
+```
 ## Startup checks
-
-When you start Passivbot, it will verify if there are no positions open on other coins. If there is an existing position
-found on at least 1 other symbol, the bot will shut down. The reason for this is that the bot operates in cross-mode for futures,
-which means that it will start influencing the existing position. If you want to, you can disable this check by setting
-the configuration parameter `allow_sharing_wallet` to `false`.
 
 When Passivbot is started, it will (if possible) set the position mode to `hedge` on the exchange, and set the leverage
 to such a level that you do not run into errors about insufficient margin. To accomplish this, the configuration parameter
-`pbr_limit` is taken into account to determine the appropriate leverage to set on the exchange.
+`wallet_exposure_limit` is taken into account to determine the appropriate leverage to set on the exchange.
 
 ## Stopping bot
 
 !!! Warning
     Before stopping the bot, please make sure it is in an appropriate state, e.g. make sure there are no positions or orders open that will cause problems if left open for a longer period 
 
-If you want to stop, you can achieve this by either:
-* using the `/stop` button in Telegram (if configured), or
-* by pressing `ctrl+c` in the terminal
+If you want to stop, you can achieve this by pressing `ctrl+c` in the terminal
 
 !!! Info
-    Please note that shutting down the bot properly may take a couple of seconds, as it needs time to properly detach from the websocket and shutdown the bot. When the bot is completely shut down, you will see a message that Telegram has been shut down, and another message that Passivbot has been shut down.
+    Please note that shutting down the bot properly may take a couple of seconds, as it needs time to properly detach from the websocket and shutdown the bot.
 
 ## Running unattended
 
