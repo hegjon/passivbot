@@ -14,6 +14,8 @@ VCS:        {{{ git_repo_vcs }}}
 
 Source:     {{{ git_repo_pack }}}
 
+BuildArch: noarch
+
 BuildRequires: python3-devel
 Requires: python3-websockets
 Requires: python3-aiohttp
