@@ -3,29 +3,30 @@
 %global __requires_exclude_from .*
 AutoReqProv: no
 
-Name:    {{{ git_name name="passivbot" }}}
-Version: 4.0.0
-Release: {{{ git_version }}}%{?dist}
+Name:    {{{ git_repo_name name="passivbot" }}}
+Version: 5.5.0
+Release: {{{ git_repo_version }}}%{?dist}
 Summary: Trading bot running on Bybit and Binance Futures
 
 License:    Public Domain
 URL:        https://github.com/enarjord/passivbot
-VCS:        {{{ git_vcs }}}
+VCS:        {{{ git_repo_vcs }}}
 
-Source:     {{{ git_pack }}}
+Source:     {{{ git_repo_pack }}}
 
-BuildRequires:  python3.8
+BuildRequires: python3-devel
+Requires: python3-websockets
+Requires: python3-aiohttp
+Requires: python3-numpy
 
 %description
 %{summary}.
 
 %prep
-{{{ git_setup_macro }}}
+{{{ git_repo_setup_macro }}}
 
 %build
-python3.8 -m venv bundled-env
-source bundled-env/bin/activate
-pip3.8 install -r requirements.txt
+#Just copy the files for now
 
 %install
 install -m 0755 -vd %{buildroot}%{_datarootdir}/%{name}
@@ -41,4 +42,4 @@ install -m 0755 contrib/rpm/passivbot-wrapped.sh %{buildroot}%{_bindir}/%{name}
 %attr(755, root, root) %{_bindir}/%{name}
 
 %changelog
-{{{ git_changelog }}}
+{{{ git_repo_changelog }}}
