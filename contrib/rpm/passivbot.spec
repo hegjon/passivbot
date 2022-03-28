@@ -33,7 +33,7 @@ Requires: python3-dateutil
 
 %install
 install -m 0755 -vd %{buildroot}%{_datarootdir}/%{name}
-cp -a . %{buildroot}%{_datarootdir}/%{name}
+cp -a *.py *.txt %{buildroot}%{_datarootdir}/%{name}
 
 install -m 0755 -vd %{buildroot}%{_bindir}
 install -m 0755 contrib/rpm/passivbot-wrapped.sh %{buildroot}%{_bindir}/%{name}
@@ -54,6 +54,9 @@ exit 0
 
 %files
 %doc README.md
+%doc changelog.md
+%doc docs
+%doc configs/live/
 %license LICENSE
 %{_sysconfdir}/%{name}/
 %{_datarootdir}/%{name}/
