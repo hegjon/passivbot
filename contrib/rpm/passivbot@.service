@@ -7,7 +7,8 @@ Type=simple
 User=passivbot
 Group=passivbot
 
-ExecStart=/usr/bin/passivbot %i --help 
+ExecStart=/usr/bin/passivbot \
+  --api-keys /etc/passivbot/api-keys.json %i --help
 
 [Install]
 WantedBy=multi-user.target
