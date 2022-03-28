@@ -22,6 +22,13 @@ Requires: python3-aiohttp
 Requires: python3-numpy
 Requires: python3-dateutil
 
+%if 0%{?mageia} > 0
+BuildRequires: systemd
+%else
+BuildRequires: systemd-rpm-macros
+%endif
+%{?systemd_requires}
+
 %description
 %{summary}.
 
@@ -44,6 +51,9 @@ install -m 0755 api-keys.example.json %{buildroot}%{_sysconfdir}/%{name}/api-key
 
 install -dD -m 0750 %{buildroot}%{_sharedstatedir}/%{name}
 
+install -dD -m 755 %{buildroot}%{_unitdir}
+install -p -m 0644 contrib/rpm/passivbot@.service %{buildroot}%{_unitdir}/
+
 %pre
 getent group passivbot >/dev/null || groupadd -r passivbot
 getent passwd passivbot >/dev/null || \
@@ -58,10 +68,12 @@ exit 0
 %doc docs
 %doc configs/live/
 %license LICENSE
+%attr(755, root, root) %{_bindir}/%{name}
 %{_sysconfdir}/%{name}/
 %{_datarootdir}/%{name}/
 %{_sharedstatedir}/%{name}/
-%attr(755, root, root) %{_bindir}/%{name}
+%{_unitdir}/passivbot@.service
+
 
 %changelog
 {{{ git_repo_changelog }}}
