@@ -62,6 +62,15 @@ getent passwd passivbot >/dev/null || \
     -c 'Passivbot' passivbot
 exit 0
 
+%post
+%systemd_post passivbot@.service
+
+%preun
+%systemd_preun passivbot@.service
+
+%postun
+%systemd_postun_with_restart passivbot@\*.service
+
 %files
 %doc README.md
 %doc changelog.md
