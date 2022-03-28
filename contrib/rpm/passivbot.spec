@@ -4,7 +4,7 @@
 AutoReqProv: no
 
 Name:    {{{ git_repo_name name="passivbot" }}}
-Version: 5.5.0
+Version: 5.5.2
 Release: {{{ git_repo_version }}}%{?dist}
 Summary: Trading bot running on Bybit and Binance Futures
 
