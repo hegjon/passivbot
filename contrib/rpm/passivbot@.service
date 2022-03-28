@@ -1,0 +1,13 @@
+[Unit]
+Description=Passivbot %i
+After=network.target
+
+[Service]
+Type=simple
+User=passivbot
+Group=passivbot
+
+ExecStart=/usr/bin/passivbot %i --help 
+
+[Install]
+WantedBy=multi-user.target
