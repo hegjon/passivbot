@@ -37,10 +37,26 @@ cp -a . %{buildroot}%{_datarootdir}/%{name}
 install -m 0755 -vd %{buildroot}%{_bindir}
 install -m 0755 contrib/rpm/passivbot-wrapped.sh %{buildroot}%{_bindir}/%{name}
 
+install -m 0755 -vd %{buildroot}%{_sysconfig}/%{name}
+install -m 0755 -vd %{buildroot}%{_sysconfdir}/%{name}/live
+install -m 0755 api-keys.example.json %{buildroot}%{_sysconfdir}/%{name}/api-keys.json
+
+install -dD -m 0750 %{buildroot}%{_sharedstatedir}/%{name}
+
+%pre
+getent group passivbot >/dev/null || groupadd -r passivbot
+getent passwd passivbot >/dev/null || \
+  useradd -r -g passivbot -s /sbin/nologin \
+    -d %{_sharedstatedir}/%{name} \
+    -c 'Passivbot' passivbot
+exit 0
+
 %files
 %doc README.md
 %license LICENSE
+%{_sysconfdir}/%{name}/
 %{_datarootdir}/%{name}/
+%{_sharedstatedir}/%{name}/
 %attr(755, root, root) %{_bindir}/%{name}
 
 %changelog
