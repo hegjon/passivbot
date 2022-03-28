@@ -20,6 +20,7 @@ BuildRequires: python3-devel
 Requires: python3-websockets
 Requires: python3-aiohttp
 Requires: python3-numpy
+Requires: python3-dateutil
 
 %description
 %{summary}.
